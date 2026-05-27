@@ -1,7 +1,23 @@
+/* =========================
+   VARIABLES
+========================= */
+
+let steps = [];
+
+let currentStep = 0;
+
+let autoRunning = false;
+
+/* =========================
+   SLEEP
+========================= */
+
 const sleep = (ms) =>
     new Promise(resolve => setTimeout(resolve, ms));
 
-/* CREATE BOX */
+/* =========================
+   CREATE BOXES
+========================= */
 
 function createBoxes(container, text){
 
@@ -20,7 +36,9 @@ function createBoxes(container, text){
     }
 }
 
-/* BAD CHARACTER */
+/* =========================
+   BAD CHARACTER TABLE
+========================= */
 
 function buildBadCharTable(pattern){
 
@@ -34,19 +52,145 @@ function buildBadCharTable(pattern){
     return table;
 }
 
-/* RESET */
+/* =========================
+   SAVE STEP
+========================= */
 
-function resetBoxes(boxes){
+function saveStep(
+    shift,
+    j,
+    type,
+    message
+){
 
-    for(let box of boxes){
+    steps.push({
 
-        box.className = "char-box";
-    }
+        shift,
+        j,
+        type,
+        message
+    });
 }
 
-/* MAIN */
+/* =========================
+   PREPARE STEPS
+========================= */
 
-async function startSearch(){
+function prepareSteps(){
+
+    steps = [];
+
+    currentStep = 0;
+
+    const text =
+        document.getElementById("text").value;
+
+    const pattern =
+        document.getElementById("pattern").value;
+
+    const badChar =
+        buildBadCharTable(pattern);
+
+    let shift = 0;
+
+    while(
+        shift <= text.length - pattern.length
+    ){
+
+        let j = pattern.length - 1;
+
+        /* CHECK STEP */
+
+        saveStep(
+            shift,
+            j,
+            "check",
+            `🔍 Kiểm tra tại vị trí ${shift}`
+        );
+
+        /* MATCH */
+
+        while(
+            j >= 0 &&
+            pattern[j] === text[shift + j]
+        ){
+
+            saveStep(
+                shift,
+                j,
+                "match",
+                `✅ Khớp ký tự '${pattern[j]}'`
+            );
+
+            j--;
+        }
+
+        /* FOUND */
+
+        if(j < 0){
+
+            saveStep(
+                shift,
+                j,
+                "found",
+                `🎉 TÌM THẤY MẪU tại vị trí ${shift}`
+            );
+
+            return;
+        }
+
+        /* MISMATCH */
+
+        saveStep(
+            shift,
+            j,
+            "mismatch",
+            `❌ Sai tại ký tự '${text[shift + j]}'`
+        );
+
+        const badCharIndex =
+            badChar[text[shift + j]];
+
+        let move;
+
+        if(badCharIndex !== undefined){
+
+            move =
+                Math.max(
+                    1,
+                    j - badCharIndex
+                );
+
+        }else{
+
+            move = j + 1;
+        }
+
+        /* MOVE */
+
+        saveStep(
+            shift,
+            j,
+            "move",
+            `➡ Dịch sang phải ${move} bước`
+        );
+
+        shift += move;
+    }
+
+    saveStep(
+        0,
+        0,
+        "notfound",
+        `🚫 KHÔNG TÌM THẤY MẪU`
+    );
+}
+
+/* =========================
+   RENDER STEP
+========================= */
+
+function renderStep(){
 
     const text =
         document.getElementById("text").value;
@@ -72,92 +216,169 @@ async function startSearch(){
     const patternBoxes =
         patternView.children;
 
-    const badChar =
-        buildBadCharTable(pattern);
+    const step =
+        steps[currentStep];
 
-    let shift = 0;
+    /* MOVE PATTERN */
 
-    while(
-        shift <= text.length - pattern.length
-    ){
+    patternView.style.marginLeft =
+        `${step.shift * 90}px`;
 
-        patternView.style.marginLeft =
-            `${shift * 82}px`;
+    /* EFFECTS */
 
-        let j = pattern.length - 1;
+    if(step.type === "check"){
 
-        status.innerHTML =
-            `🔍 Đang kiểm tra tại vị trí <b>${shift}</b>`;
+        textBoxes[
+            step.shift + step.j
+        ]?.classList.add("active");
 
-        await sleep(900);
-
-        while(
-            j >= 0 &&
-            pattern[j] === text[shift + j]
-        ){
-
-            textBoxes[shift + j].className =
-                "char-box match";
-
-            patternBoxes[j].className =
-                "char-box match";
-
-            status.innerHTML =
-                `✅ Khớp ký tự <b>${pattern[j]}</b>`;
-
-            await sleep(700);
-
-            j--;
-        }
-
-        /* FOUND */
-
-        if(j < 0){
-
-            status.innerHTML =
-                `🎉 TÌM THẤY MẪU tại vị trí <b>${shift}</b>`;
-
-            return;
-        }
-
-        /* MISMATCH */
-
-        textBoxes[shift + j].className =
-            "char-box mismatch";
-
-        patternBoxes[j].className =
-            "char-box mismatch";
-
-        await sleep(900);
-
-        const badCharIndex =
-            badChar[text[shift + j]];
-
-        let move;
-
-        if(badCharIndex !== undefined){
-
-            move = Math.max(
-                1,
-                j - badCharIndex
-            );
-
-        }else{
-
-            move = j + 1;
-        }
-
-        status.innerHTML =
-            `❌ Sai ký tự → Dịch sang phải <b>${move}</b> bước`;
-
-        await sleep(1200);
-
-        resetBoxes(textBoxes);
-        resetBoxes(patternBoxes);
-
-        shift += move;
+        patternBoxes[
+            step.j
+        ]?.classList.add("active");
     }
 
+    if(step.type === "match"){
+
+        textBoxes[
+            step.shift + step.j
+        ]?.classList.add("match");
+
+        patternBoxes[
+            step.j
+        ]?.classList.add("match");
+    }
+
+    if(step.type === "mismatch"){
+
+        textBoxes[
+            step.shift + step.j
+        ]?.classList.add("mismatch");
+
+        patternBoxes[
+            step.j
+        ]?.classList.add("mismatch");
+    }
+
+    if(step.type === "found"){
+
+        for(let i = 0; i < pattern.length; i++){
+
+            textBoxes[
+                step.shift + i
+            ]?.classList.add("match");
+        }
+    }
+
+    /* STATUS */
+
     status.innerHTML =
-        `🚫 KHÔNG TÌM THẤY MẪU`;
+
+        `
+        🎬 <b>BƯỚC ${
+            currentStep + 1
+        } / ${steps.length}</b>
+
+        <br><br>
+
+        ${step.message}
+        `;
+}
+
+/* =========================
+   AUTO RUN
+========================= */
+
+async function startSearch(){
+
+    prepareSteps();
+
+    autoRunning = true;
+
+    for(
+        currentStep = 0;
+        currentStep < steps.length;
+        currentStep++
+    ){
+
+        if(!autoRunning){
+
+            break;
+        }
+
+        renderStep();
+
+        await sleep(1000);
+    }
+}
+
+/* =========================
+   NEXT STEP
+========================= */
+
+function nextStep(){
+
+    autoRunning = false;
+
+    if(steps.length === 0){
+
+        prepareSteps();
+
+        renderStep();
+
+        return;
+    }
+
+    if(
+        currentStep <
+        steps.length - 1
+    ){
+
+        currentStep++;
+
+        renderStep();
+    }
+}
+
+/* =========================
+   PREV STEP
+========================= */
+
+function prevStep(){
+
+    autoRunning = false;
+
+    if(
+        currentStep > 0
+    ){
+
+        currentStep--;
+
+        renderStep();
+    }
+}
+
+/* =========================
+   RESET
+========================= */
+
+function resetDemo(){
+
+    autoRunning = false;
+
+    steps = [];
+
+    currentStep = 0;
+
+    document.getElementById(
+        "textView"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "patternView"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "status"
+    ).innerHTML =
+        "🤖 Demo đã reset";
 }

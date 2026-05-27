@@ -620,3 +620,46 @@ button:hover{
         font-size:18px;
     }
 }
+/* =========================
+   BUTTON GROUP
+========================= */
+
+.button-group{
+
+    display:flex;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+}
+
+/* ACTIVE */
+
+.active{
+
+    background:
+        linear-gradient(
+            145deg,
+            #4cc9f0,
+            #4361ee
+        ) !important;
+
+    color:white;
+
+    animation:pulse 0.6s infinite alternate;
+}
+
+@keyframes pulse{
+
+    from{
+
+        transform:
+            scale(1.05);
+    }
+
+    to{
+
+        transform:
+            scale(1.18);
+    }
+}
