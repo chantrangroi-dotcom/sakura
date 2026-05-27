@@ -40,10 +40,10 @@ body::before{
 
     position:fixed;
 
-    top:40px;
-    right:80px;
+    top:20px;
+    right:40px;
 
-    font-size:120px;
+    font-size:90px;
 
     animation:
         rotateSun 20s linear infinite,
@@ -70,12 +70,12 @@ body::before{
     }
 
     to{
-        filter:drop-shadow(0 0 35px orange);
+        filter:drop-shadow(0 0 30px orange);
     }
 }
 
 /* =========================
-   CLOUD
+   CLOUDS
 ========================= */
 
 .cloud{
@@ -105,61 +105,61 @@ body::before{
 
 .cloud1{
 
-    width:220px;
-    height:70px;
+    width:180px;
+    height:60px;
 
-    top:70px;
-    left:-300px;
+    top:80px;
+    left:-250px;
 
-    animation:moveCloud 28s linear infinite;
+    animation:moveCloud 30s linear infinite;
 }
 
 .cloud1::before{
 
-    width:90px;
-    height:90px;
+    width:70px;
+    height:70px;
 
-    top:-40px;
-    left:30px;
+    top:-30px;
+    left:20px;
 }
 
 .cloud1::after{
 
-    width:120px;
-    height:120px;
+    width:90px;
+    height:90px;
 
-    top:-60px;
-    right:30px;
+    top:-45px;
+    right:20px;
 }
 
 /* CLOUD 2 */
 
 .cloud2{
 
-    width:180px;
-    height:60px;
+    width:150px;
+    height:50px;
 
     top:220px;
-    left:-250px;
+    left:-200px;
 
-    animation:moveCloud 40s linear infinite;
+    animation:moveCloud 45s linear infinite;
 }
 
 .cloud2::before{
 
-    width:80px;
-    height:80px;
+    width:60px;
+    height:60px;
 
-    top:-35px;
+    top:-25px;
     left:20px;
 }
 
 .cloud2::after{
 
-    width:100px;
-    height:100px;
+    width:80px;
+    height:80px;
 
-    top:-50px;
+    top:-40px;
     right:20px;
 }
 
@@ -167,34 +167,32 @@ body::before{
 
 .cloud3{
 
-    width:250px;
-    height:80px;
+    width:200px;
+    height:70px;
 
-    top:360px;
-    left:-350px;
+    top:340px;
+    left:-300px;
 
-    animation:moveCloud 55s linear infinite;
+    animation:moveCloud 60s linear infinite;
 }
 
 .cloud3::before{
 
-    width:90px;
-    height:90px;
+    width:80px;
+    height:80px;
 
-    top:-40px;
-    left:30px;
+    top:-35px;
+    left:25px;
 }
 
 .cloud3::after{
 
-    width:130px;
-    height:130px;
+    width:100px;
+    height:100px;
 
-    top:-60px;
-    right:30px;
+    top:-50px;
+    right:25px;
 }
-
-/* CLOUD ANIMATION */
 
 @keyframes moveCloud{
 
@@ -213,10 +211,13 @@ body::before{
 
 .container{
 
-    width:92%;
-    max-width:1450px;
+    width:98%;
 
-    margin:40px auto;
+    max-width:100%;
+
+    margin:20px auto;
+
+    padding:10px;
 }
 
 /* =========================
@@ -227,18 +228,15 @@ h1{
 
     text-align:center;
 
-    font-size:64px;
+    font-size:42px;
 
-    margin-bottom:40px;
+    margin-bottom:25px;
 
     color:#ff4d6d;
 
-    letter-spacing:3px;
-
     text-shadow:
-        4px 4px 0px white,
-        8px 8px 0px #ffbe0b,
-        12px 12px 0px #fb5607;
+        3px 3px 0px white,
+        6px 6px 0px #ffbe0b;
 
     animation:bounceTitle 2s infinite;
 }
@@ -250,7 +248,7 @@ h1{
     }
 
     50%{
-        transform:translateY(-12px);
+        transform:translateY(-8px);
     }
 
     100%{
@@ -259,7 +257,7 @@ h1{
 }
 
 /* =========================
-   PANEL
+   PANELS
 ========================= */
 
 .panel,
@@ -273,27 +271,27 @@ h1{
             #f3f4f6
         );
 
-    border:6px solid #222;
+    border:5px solid #222;
 
-    border-radius:40px;
+    border-radius:30px;
 
     box-shadow:
-        12px 12px 0px #222;
+        8px 8px 0px #222;
 }
 
 /* =========================
-   INPUT PANEL
+   PANEL
 ========================= */
 
 .panel{
 
-    padding:40px;
+    padding:25px;
 
-    margin-bottom:40px;
+    margin-bottom:25px;
 
     display:grid;
 
-    gap:25px;
+    gap:20px;
 }
 
 /* =========================
@@ -304,29 +302,29 @@ h1{
 
     display:grid;
 
-    gap:12px;
+    gap:10px;
 }
 
 .input-box label{
 
-    font-size:24px;
-
-    color:#222;
+    font-size:20px;
 
     font-weight:bold;
+
+    color:#222;
 }
 
 .input-box input{
 
-    padding:20px;
+    padding:16px;
 
-    border-radius:20px;
+    border-radius:16px;
 
-    border:5px solid #222;
+    border:4px solid #222;
 
     background:#fff9c4;
 
-    font-size:22px;
+    font-size:18px;
 
     outline:none;
 
@@ -335,12 +333,25 @@ h1{
 
 .input-box input:focus{
 
-    transform:scale(1.02);
-
     background:white;
 
+    transform:scale(1.01);
+
     box-shadow:
-        0 0 20px #38bdf8;
+        0 0 15px #38bdf8;
+}
+
+/* =========================
+   BUTTON GROUP
+========================= */
+
+.button-group{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
 }
 
 /* =========================
@@ -349,13 +360,17 @@ h1{
 
 button{
 
-    padding:22px;
+    flex:1;
+
+    min-width:180px;
+
+    padding:14px 18px;
 
     border:none;
 
-    border-radius:22px;
+    border-radius:18px;
 
-    border:5px solid #222;
+    border:4px solid #222;
 
     background:
         linear-gradient(
@@ -366,7 +381,7 @@ button{
 
     color:white;
 
-    font-size:26px;
+    font-size:18px;
 
     font-weight:bold;
 
@@ -375,34 +390,29 @@ button{
     transition:0.3s;
 
     box-shadow:
-        8px 8px 0px #222;
+        5px 5px 0px #222;
 }
 
 button:hover{
 
     transform:
-        translateY(-6px)
+        translateY(-4px)
         scale(1.03);
-
-    background:
-        linear-gradient(
-            45deg,
-            #ff758f,
-            #ff4d6d
-        );
 }
 
 /* =========================
-   VISUAL AREA
+   VISUAL
 ========================= */
 
 .visual-area{
 
-    padding:40px;
+    padding:20px;
 
-    margin-bottom:40px;
+    margin-bottom:25px;
 
     overflow-x:auto;
+
+    scrollbar-width:none;
 }
 
 /* =========================
@@ -411,16 +421,13 @@ button:hover{
 
 .tag{
 
-    font-size:30px;
+    font-size:24px;
 
     font-weight:bold;
 
     color:#ff4d6d;
 
-    margin-bottom:18px;
-
-    text-shadow:
-        2px 2px 0px white;
+    margin-bottom:12px;
 }
 
 /* =========================
@@ -433,31 +440,33 @@ button:hover{
 
     align-items:center;
 
-    min-height:110px;
+    min-height:80px;
 
-    margin-bottom:30px;
+    margin-bottom:25px;
 
     position:relative;
+
+    flex-wrap:nowrap;
 }
 
 /* =========================
-   CHARACTER BOX
+   CHAR BOX
 ========================= */
 
 .char-box{
 
-    width:78px;
-    height:78px;
+    width:52px;
+    height:52px;
 
-    margin-right:12px;
+    margin-right:6px;
 
-    border-radius:24px;
+    border-radius:16px;
 
     display:flex;
     justify-content:center;
     align-items:center;
 
-    font-size:34px;
+    font-size:24px;
     font-weight:bold;
 
     color:#222;
@@ -469,12 +478,14 @@ button:hover{
             #ffd43b
         );
 
-    border:5px solid #222;
+    border:4px solid #222;
 
     transition:0.3s;
 
     box-shadow:
-        6px 6px 0px #222;
+        4px 4px 0px #222;
+
+    flex-shrink:0;
 }
 
 /* HOVER */
@@ -482,8 +493,37 @@ button:hover{
 .char-box:hover{
 
     transform:
-        rotate(8deg)
-        scale(1.08);
+        rotate(5deg)
+        scale(1.05);
+}
+
+/* =========================
+   ACTIVE
+========================= */
+
+.active{
+
+    background:
+        linear-gradient(
+            145deg,
+            #4cc9f0,
+            #4361ee
+        ) !important;
+
+    color:white;
+
+    animation:pulse 0.6s infinite alternate;
+}
+
+@keyframes pulse{
+
+    from{
+        transform:scale(1.05);
+    }
+
+    to{
+        transform:scale(1.15);
+    }
 }
 
 /* =========================
@@ -501,29 +541,17 @@ button:hover{
 
     color:white;
 
-    transform:
-        scale(1.18)
-        rotate(6deg);
-
     animation:jump 0.5s infinite alternate;
-
-    box-shadow:
-        0 0 20px #38b000,
-        6px 6px 0px #222;
 }
 
 @keyframes jump{
 
     from{
-        transform:
-            translateY(0)
-            scale(1.18);
+        transform:translateY(0);
     }
 
     to{
-        transform:
-            translateY(-10px)
-            scale(1.18);
+        transform:translateY(-6px);
     }
 }
 
@@ -548,15 +576,15 @@ button:hover{
 @keyframes shake{
 
     0%{
-        transform:translateX(-4px);
+        transform:translateX(-3px);
     }
 
     50%{
-        transform:translateX(4px);
+        transform:translateX(3px);
     }
 
     100%{
-        transform:translateX(-4px);
+        transform:translateX(-3px);
     }
 }
 
@@ -566,7 +594,7 @@ button:hover{
 
 .pattern-row{
 
-    transition:0.6s ease;
+    transition:0.5s ease;
 }
 
 /* =========================
@@ -575,23 +603,23 @@ button:hover{
 
 .status-box{
 
-    padding:40px;
+    padding:25px;
 }
 
 .status-box h2{
 
-    font-size:34px;
+    font-size:28px;
 
     color:#ff4d6d;
 
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 #status{
 
-    font-size:26px;
+    font-size:20px;
 
-    line-height:1.8;
+    line-height:1.6;
 
     color:#222;
 }
@@ -600,66 +628,33 @@ button:hover{
    RESPONSIVE
 ========================= */
 
-@media(max-width:768px){
+@media(max-width:900px){
 
     h1{
 
-        font-size:34px;
+        font-size:28px;
     }
 
     .char-box{
 
-        width:58px;
-        height:58px;
+        width:42px;
+        height:42px;
 
-        font-size:24px;
+        font-size:18px;
+    }
+
+    button{
+
+        width:100%;
+    }
+
+    .button-group{
+
+        display:grid;
     }
 
     #status{
 
-        font-size:18px;
-    }
-}
-/* =========================
-   BUTTON GROUP
-========================= */
-
-.button-group{
-
-    display:flex;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-}
-
-/* ACTIVE */
-
-.active{
-
-    background:
-        linear-gradient(
-            145deg,
-            #4cc9f0,
-            #4361ee
-        ) !important;
-
-    color:white;
-
-    animation:pulse 0.6s infinite alternate;
-}
-
-@keyframes pulse{
-
-    from{
-
-        transform:
-            scale(1.05);
-    }
-
-    to{
-
-        transform:
-            scale(1.18);
+        font-size:16px;
     }
 }
