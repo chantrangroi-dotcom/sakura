@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Luxury Product Card</title>
+
+    <link rel="stylesheet" href="bai1.css">
+</head>
+
+<body>
+
+    <!-- particles -->
+    <div class="particle" style="left:10%; animation-delay:0s;"></div>
+    <div class="particle" style="left:25%; animation-delay:2s;"></div>
+    <div class="particle" style="left:45%; animation-delay:4s;"></div>
+    <div class="particle" style="left:65%; animation-delay:1s;"></div>
+    <div class="particle" style="left:85%; animation-delay:3s;"></div>
+
+    <div class="container">
+
+        <!-- SẢN PHẨM 1 -->
+        <div class="card">
+
+            <div class="top">
+
+                <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000&auto=format&fit=crop"
+                alt="Shoes">
+
+                <div class="info">
+
+                    <div class="brand">
+                        PREMIUM EDITION
+                    </div>
+
+                    <div class="title">
+                        Nike Air Max
+                    </div>
+
+                    <div class="price">
+                        2.500.000₫
+                    </div>
+
+                    <div class="desc">
+                        Thiết kế siêu sang với phong cách hiện đại.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="quantity-section">
+
+                <div class="label">
+                    Chỉnh số lượng sản phẩm
+                </div>
+
+                <div class="controls">
+
+                    <button class="btn minus" onclick="decrease(0)">
+                        −
+                    </button>
+
+                    <div class="quantity" id="quantity0">
+                        0
+                    </div>
+
+                    <button class="btn plus" onclick="increase(0)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="total-box">
+
+                <div class="total-label">
+                    Tổng thanh toán
+                </div>
+
+                <div class="total" id="total0">
+                    0₫
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SẢN PHẨM 2 -->
+        <div class="card">
+
+            <div class="top">
+
+                <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1000&auto=format&fit=crop"
+                alt="Shoes">
+
+                <div class="info">
+
+                    <div class="brand">
+                        LIMITED
+                    </div>
+
+                    <div class="title">
+                        Adidas UltraBoost
+                    </div>
+
+                    <div class="price">
+                        3.200.000₫
+                    </div>
+
+                    <div class="desc">
+                        Mẫu giày cao cấp với hiệu ứng neon cực đẹp.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="quantity-section">
+
+                <div class="label">
+                    Chỉnh số lượng sản phẩm
+                </div>
+
+                <div class="controls">
+
+                    <button class="btn minus" onclick="decrease(1)">
+                        −
+                    </button>
+
+                    <div class="quantity" id="quantity1">
+                        0
+                    </div>
+
+                    <button class="btn plus" onclick="increase(1)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="total-box">
+
+                <div class="total-label">
+                    Tổng thanh toán
+                </div>
+
+                <div class="total" id="total1">
+                    0₫
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SẢN PHẨM 3 -->
+        <div class="card">
+
+            <div class="top">
+
+                <img
+                class="product-img"
+                src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1000&auto=format&fit=crop"
+                alt="Shoes">
+
+                <div class="info">
+
+                    <div class="brand">
+                        LUXURY
+                    </div>
+
+                    <div class="title">
+                        Puma RS-X
+                    </div>
+
+                    <div class="price">
+                        1.900.000₫
+                    </div>
+
+                    <div class="desc">
+                        Thiết kế thể thao mạnh mẽ chuẩn gamer VIP.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="quantity-section">
+
+                <div class="label">
+                    Chỉnh số lượng sản phẩm
+                </div>
+
+                <div class="controls">
+
+                    <button class="btn minus" onclick="decrease(2)">
+                        −
+                    </button>
+
+                    <div class="quantity" id="quantity2">
+                        0
+                    </div>
+
+                    <button class="btn plus" onclick="increase(2)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="total-box">
+
+                <div class="total-label">
+                    Tổng thanh toán
+                </div>
+
+                <div class="total" id="total2">
+                    0₫
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="bai1.js"></script>
+
+</body>
+</html>

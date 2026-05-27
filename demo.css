@@ -1,0 +1,622 @@
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            #6dd5fa 0%,
+            #ffffff 100%
+        );
+
+    position:relative;
+}
+
+/* =========================
+   SUN
+========================= */
+
+body::before{
+
+    content:"☀";
+
+    position:fixed;
+
+    top:40px;
+    right:80px;
+
+    font-size:120px;
+
+    animation:
+        rotateSun 20s linear infinite,
+        glowSun 2s infinite alternate;
+
+    z-index:-1;
+}
+
+@keyframes rotateSun{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes glowSun{
+
+    from{
+        filter:drop-shadow(0 0 10px yellow);
+    }
+
+    to{
+        filter:drop-shadow(0 0 35px orange);
+    }
+}
+
+/* =========================
+   CLOUD
+========================= */
+
+.cloud{
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:100px;
+
+    opacity:0.9;
+}
+
+.cloud::before,
+.cloud::after{
+
+    content:"";
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:50%;
+}
+
+/* CLOUD 1 */
+
+.cloud1{
+
+    width:220px;
+    height:70px;
+
+    top:70px;
+    left:-300px;
+
+    animation:moveCloud 28s linear infinite;
+}
+
+.cloud1::before{
+
+    width:90px;
+    height:90px;
+
+    top:-40px;
+    left:30px;
+}
+
+.cloud1::after{
+
+    width:120px;
+    height:120px;
+
+    top:-60px;
+    right:30px;
+}
+
+/* CLOUD 2 */
+
+.cloud2{
+
+    width:180px;
+    height:60px;
+
+    top:220px;
+    left:-250px;
+
+    animation:moveCloud 40s linear infinite;
+}
+
+.cloud2::before{
+
+    width:80px;
+    height:80px;
+
+    top:-35px;
+    left:20px;
+}
+
+.cloud2::after{
+
+    width:100px;
+    height:100px;
+
+    top:-50px;
+    right:20px;
+}
+
+/* CLOUD 3 */
+
+.cloud3{
+
+    width:250px;
+    height:80px;
+
+    top:360px;
+    left:-350px;
+
+    animation:moveCloud 55s linear infinite;
+}
+
+.cloud3::before{
+
+    width:90px;
+    height:90px;
+
+    top:-40px;
+    left:30px;
+}
+
+.cloud3::after{
+
+    width:130px;
+    height:130px;
+
+    top:-60px;
+    right:30px;
+}
+
+/* CLOUD ANIMATION */
+
+@keyframes moveCloud{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(2200px);
+    }
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+
+    width:92%;
+    max-width:1450px;
+
+    margin:40px auto;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+h1{
+
+    text-align:center;
+
+    font-size:64px;
+
+    margin-bottom:40px;
+
+    color:#ff4d6d;
+
+    letter-spacing:3px;
+
+    text-shadow:
+        4px 4px 0px white,
+        8px 8px 0px #ffbe0b,
+        12px 12px 0px #fb5607;
+
+    animation:bounceTitle 2s infinite;
+}
+
+@keyframes bounceTitle{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   PANEL
+========================= */
+
+.panel,
+.visual-area,
+.status-box{
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f3f4f6
+        );
+
+    border:6px solid #222;
+
+    border-radius:40px;
+
+    box-shadow:
+        12px 12px 0px #222;
+}
+
+/* =========================
+   INPUT PANEL
+========================= */
+
+.panel{
+
+    padding:40px;
+
+    margin-bottom:40px;
+
+    display:grid;
+
+    gap:25px;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.input-box{
+
+    display:grid;
+
+    gap:12px;
+}
+
+.input-box label{
+
+    font-size:24px;
+
+    color:#222;
+
+    font-weight:bold;
+}
+
+.input-box input{
+
+    padding:20px;
+
+    border-radius:20px;
+
+    border:5px solid #222;
+
+    background:#fff9c4;
+
+    font-size:22px;
+
+    outline:none;
+
+    transition:0.3s;
+}
+
+.input-box input:focus{
+
+    transform:scale(1.02);
+
+    background:white;
+
+    box-shadow:
+        0 0 20px #38bdf8;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+
+    padding:22px;
+
+    border:none;
+
+    border-radius:22px;
+
+    border:5px solid #222;
+
+    background:
+        linear-gradient(
+            45deg,
+            #ff4d6d,
+            #ff758f
+        );
+
+    color:white;
+
+    font-size:26px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    box-shadow:
+        8px 8px 0px #222;
+}
+
+button:hover{
+
+    transform:
+        translateY(-6px)
+        scale(1.03);
+
+    background:
+        linear-gradient(
+            45deg,
+            #ff758f,
+            #ff4d6d
+        );
+}
+
+/* =========================
+   VISUAL AREA
+========================= */
+
+.visual-area{
+
+    padding:40px;
+
+    margin-bottom:40px;
+
+    overflow-x:auto;
+}
+
+/* =========================
+   TAG
+========================= */
+
+.tag{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#ff4d6d;
+
+    margin-bottom:18px;
+
+    text-shadow:
+        2px 2px 0px white;
+}
+
+/* =========================
+   ROW
+========================= */
+
+.row{
+
+    display:flex;
+
+    align-items:center;
+
+    min-height:110px;
+
+    margin-bottom:30px;
+
+    position:relative;
+}
+
+/* =========================
+   CHARACTER BOX
+========================= */
+
+.char-box{
+
+    width:78px;
+    height:78px;
+
+    margin-right:12px;
+
+    border-radius:24px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:34px;
+    font-weight:bold;
+
+    color:#222;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffe066,
+            #ffd43b
+        );
+
+    border:5px solid #222;
+
+    transition:0.3s;
+
+    box-shadow:
+        6px 6px 0px #222;
+}
+
+/* HOVER */
+
+.char-box:hover{
+
+    transform:
+        rotate(8deg)
+        scale(1.08);
+}
+
+/* =========================
+   MATCH
+========================= */
+
+.match{
+
+    background:
+        linear-gradient(
+            145deg,
+            #70e000,
+            #38b000
+        ) !important;
+
+    color:white;
+
+    transform:
+        scale(1.18)
+        rotate(6deg);
+
+    animation:jump 0.5s infinite alternate;
+
+    box-shadow:
+        0 0 20px #38b000,
+        6px 6px 0px #222;
+}
+
+@keyframes jump{
+
+    from{
+        transform:
+            translateY(0)
+            scale(1.18);
+    }
+
+    to{
+        transform:
+            translateY(-10px)
+            scale(1.18);
+    }
+}
+
+/* =========================
+   MISMATCH
+========================= */
+
+.mismatch{
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff595e,
+            #d90429
+        ) !important;
+
+    color:white;
+
+    animation:shake 0.25s infinite;
+}
+
+@keyframes shake{
+
+    0%{
+        transform:translateX(-4px);
+    }
+
+    50%{
+        transform:translateX(4px);
+    }
+
+    100%{
+        transform:translateX(-4px);
+    }
+}
+
+/* =========================
+   PATTERN
+========================= */
+
+.pattern-row{
+
+    transition:0.6s ease;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status-box{
+
+    padding:40px;
+}
+
+.status-box h2{
+
+    font-size:34px;
+
+    color:#ff4d6d;
+
+    margin-bottom:20px;
+}
+
+#status{
+
+    font-size:26px;
+
+    line-height:1.8;
+
+    color:#222;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    h1{
+
+        font-size:34px;
+    }
+
+    .char-box{
+
+        width:58px;
+        height:58px;
+
+        font-size:24px;
+    }
+
+    #status{
+
+        font-size:18px;
+    }
+}

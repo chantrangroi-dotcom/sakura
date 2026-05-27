@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boyer Moore Cartoon</title>
+
+    <link rel="stylesheet" href="demo.css">
+</head>
+
+<body>
+
+    <!-- CLOUDS -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <h1>
+            🎮 BOYER - MOORE CARTOON 🎮
+        </h1>
+
+        <!-- PANEL -->
+        <div class="panel">
+
+            <div class="input-box">
+                <label>📜 Chuỗi văn bản</label>
+                <input type="text" id="text" value="ABAAABCDABCABC">
+            </div>
+
+            <div class="input-box">
+                <label>🎯 Mẫu cần tìm</label>
+                <input type="text" id="pattern" value="ABCABC">
+            </div>
+
+            <button onclick="startSearch()">
+                ▶ BẮT ĐẦU DEMO
+            </button>
+
+        </div>
+
+        <!-- VISUAL -->
+        <div class="visual-area">
+
+            <div class="tag">TEXT</div>
+            <div id="textView" class="row"></div>
+
+            <div class="tag">PATTERN</div>
+            <div id="patternView" class="row pattern-row"></div>
+
+        </div>
+
+        <!-- STATUS -->
+        <div class="status-box">
+
+            <h2>🤖 THÔNG BÁO</h2>
+
+            <p id="status">
+                Nhấn nút để bắt đầu mô phỏng Boyer Moore...
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="demo.js"></script>
+
+</body>
+
+</html>

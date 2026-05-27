@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tank Battle Pro</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#141e30,#243b55);
+    overflow:hidden;
+}
+
+.game-container{
+    text-align:center;
+}
+
+h1{
+    color:white;
+    margin-bottom:20px;
+    font-size:50px;
+    text-shadow:0 0 20px cyan;
+}
+
+.info{
+    width:1000px;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+}
+
+canvas{
+    background:#111;
+    border:5px solid cyan;
+    border-radius:20px;
+    box-shadow:0 0 30px cyan;
+}
+
+.guide{
+    margin-top:15px;
+    color:white;
+    font-size:18px;
+    line-height:1.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game-container">
+
+    <h1>💥 TANK BATTLE PRO</h1>
+
+    <div class="info">
+
+        <div>
+            🔵 Tank Xanh:
+            <span id="score1">0</span>
+        </div>
+
+        <div>
+            🔴 Tank Đỏ:
+            <span id="score2">0</span>
+        </div>
+
+    </div>
+
+    <canvas id="gameCanvas" width="1000" height="600"></canvas>
+
+    <div class="guide">
+
+        🔵 Tank Xanh:
+        WASD để di chuyển |
+        SPACE để bắn
+        <br>
+
+        🔴 Tank Đỏ:
+        ↑ ↓ ← → để di chuyển |
+        ENTER để bắn
+
+    </div>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let keys = {};
+
+document.addEventListener("keydown", function(e){
+
+    keys[e.key] = true;
+
+});
+
+document.addEventListener("keyup", function(e){
+
+    keys[e.key] = false;
+
+});
+
+// ===== TANK =====
+
+class Tank{
+
+    constructor(x,y,color){
+
+        this.x = x;
+        this.y = y;
+
+        this.width = 50;
+        this.height = 50;
+
+        this.color = color;
+
+        this.speed = 4;
+
+        this.health = 5;
+
+        this.direction = "UP";
+
+    }
+
+    draw(){
+
+        // bánh
+        ctx.fillStyle = "#333";
+
+        ctx.fillRect(this.x - 5,this.y,5,15);
+        ctx.fillRect(this.x - 5,this.y + 35,5,15);
+
+        ctx.fillRect(this.x + 50,this.y,5,15);
+        ctx.fillRect(this.x + 50,this.y + 35,5,15);
+
+        // thân
+        ctx.fillStyle = this.color;
+
+        ctx.fillRect(
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
+
+        // giữa
+        ctx.fillStyle = "#222";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x + 25,
+            this.y + 25,
+            12,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+        // ===== NÒNG =====
+
+        ctx.fillStyle = "white";
+
+        if(this.direction === "UP"){
+
+            ctx.fillRect(
+                this.x + 20,
+                this.y - 20,
+                10,
+                25
+            );
+
+        }
+
+        else if(this.direction === "DOWN"){
+
+            ctx.fillRect(
+                this.x + 20,
+                this.y + 45,
+                10,
+                25
+            );
+
+        }
+
+        else if(this.direction === "LEFT"){
+
+            ctx.fillRect(
+                this.x - 20,
+                this.y + 20,
+                25,
+                10
+            );
+
+        }
+
+        else if(this.direction === "RIGHT"){
+
+            ctx.fillRect(
+                this.x + 45,
+                this.y + 20,
+                25,
+                10
+            );
+
+        }
+
+        // ===== HP =====
+
+        ctx.fillStyle = "red";
+
+        ctx.fillRect(
+            this.x,
+            this.y - 15,
+            50,
+            6
+        );
+
+        ctx.fillStyle = "lime";
+
+        ctx.fillRect(
+            this.x,
+            this.y - 15,
+            this.health * 10,
+            6
+        );
+
+    }
+
+}
+
+// ===== BULLET =====
+
+class Bullet{
+
+    constructor(x,y,dx,dy,color){
+
+        this.x = x;
+        this.y = y;
+
+        this.dx = dx;
+        this.dy = dy;
+
+        this.radius = 6;
+
+        this.color = color;
+
+    }
+
+    draw(){
+
+        ctx.beginPath();
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.radius,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle = this.color;
+
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = this.color;
+
+        ctx.fill();
+
+        ctx.closePath();
+
+        ctx.shadowBlur = 0;
+
+    }
+
+    update(){
+
+        this.x += this.dx;
+        this.y += this.dy;
+
+    }
+
+}
+
+// ===== TẠO TANK =====
+
+const tank1 = new Tank(
+    100,
+    250,
+    "#00ccff"
+);
+
+const tank2 = new Tank(
+    850,
+    250,
+    "#ff3b3b"
+);
+
+let bullets = [];
+
+let score1 = 0;
+let score2 = 0;
+
+// ===== BẮN =====
+
+function shoot(tank,color){
+
+    let dx = 0;
+    let dy = 0;
+
+    let bulletX = tank.x + 25;
+    let bulletY = tank.y + 25;
+
+    // hướng
+
+    if(tank.direction === "UP"){
+
+        dy = -8;
+
+        bulletY = tank.y - 10;
+
+    }
+
+    else if(tank.direction === "DOWN"){
+
+        dy = 8;
+
+        bulletY = tank.y + 60;
+
+    }
+
+    else if(tank.direction === "LEFT"){
+
+        dx = -8;
+
+        bulletX = tank.x - 10;
+
+    }
+
+    else if(tank.direction === "RIGHT"){
+
+        dx = 8;
+
+        bulletX = tank.x + 60;
+
+    }
+
+    bullets.push(
+
+        new Bullet(
+            bulletX,
+            bulletY,
+            dx,
+            dy,
+            color
+        )
+
+    );
+
+}
+
+// ===== RESET =====
+
+function resetGame(){
+
+    tank1.x = 100;
+    tank1.y = 250;
+
+    tank2.x = 850;
+    tank2.y = 250;
+
+    tank1.health = 5;
+    tank2.health = 5;
+
+    bullets = [];
+
+}
+
+// ===== UPDATE =====
+
+function update(){
+
+    // ===== TANK 1 =====
+
+    if(keys["a"]){
+
+        tank1.x -= tank1.speed;
+        tank1.direction = "LEFT";
+
+    }
+
+    if(keys["d"]){
+
+        tank1.x += tank1.speed;
+        tank1.direction = "RIGHT";
+
+    }
+
+    if(keys["w"]){
+
+        tank1.y -= tank1.speed;
+        tank1.direction = "UP";
+
+    }
+
+    if(keys["s"]){
+
+        tank1.y += tank1.speed;
+        tank1.direction = "DOWN";
+
+    }
+
+    // ===== TANK 2 =====
+
+    if(keys["ArrowLeft"]){
+
+        tank2.x -= tank2.speed;
+        tank2.direction = "LEFT";
+
+    }
+
+    if(keys["ArrowRight"]){
+
+        tank2.x += tank2.speed;
+        tank2.direction = "RIGHT";
+
+    }
+
+    if(keys["ArrowUp"]){
+
+        tank2.y -= tank2.speed;
+        tank2.direction = "UP";
+
+    }
+
+    if(keys["ArrowDown"]){
+
+        tank2.y += tank2.speed;
+        tank2.direction = "DOWN";
+
+    }
+
+    // ===== GIỚI HẠN =====
+
+    [tank1,tank2].forEach(tank => {
+
+        if(tank.x < 0){
+            tank.x = 0;
+        }
+
+        if(tank.y < 0){
+            tank.y = 0;
+        }
+
+        if(tank.x + tank.width > canvas.width){
+
+            tank.x = canvas.width - tank.width;
+
+        }
+
+        if(tank.y + tank.height > canvas.height){
+
+            tank.y = canvas.height - tank.height;
+
+        }
+
+    });
+
+    // ===== UPDATE ĐẠN =====
+
+    bullets.forEach((bullet,index) => {
+
+        bullet.update();
+
+        // trúng tank xanh
+
+        if(
+
+            bullet.color === "#ff3b3b" &&
+
+            bullet.x > tank1.x &&
+            bullet.x < tank1.x + tank1.width &&
+
+            bullet.y > tank1.y &&
+            bullet.y < tank1.y + tank1.height
+
+        ){
+
+            tank1.health--;
+
+            bullets.splice(index,1);
+
+        }
+
+        // trúng tank đỏ
+
+        if(
+
+            bullet.color === "#00ccff" &&
+
+            bullet.x > tank2.x &&
+            bullet.x < tank2.x + tank2.width &&
+
+            bullet.y > tank2.y &&
+            bullet.y < tank2.y + tank2.height
+
+        ){
+
+            tank2.health--;
+
+            bullets.splice(index,1);
+
+        }
+
+        // ra khỏi map
+
+        if(
+
+            bullet.x < 0 ||
+            bullet.x > canvas.width ||
+
+            bullet.y < 0 ||
+            bullet.y > canvas.height
+
+        ){
+
+            bullets.splice(index,1);
+
+        }
+
+    });
+
+    // ===== THẮNG =====
+
+    if(tank1.health <= 0){
+
+        score2++;
+
+        document.getElementById("score2").innerText = score2;
+
+        resetGame();
+
+    }
+
+    if(tank2.health <= 0){
+
+        score1++;
+
+        document.getElementById("score1").innerText = score1;
+
+        resetGame();
+
+    }
+
+}
+
+// ===== DRAW =====
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // grid nền
+
+    for(let i = 0; i < canvas.width; i += 50){
+
+        ctx.strokeStyle = "rgba(255,255,255,0.05)";
+
+        ctx.beginPath();
+
+        ctx.moveTo(i,0);
+
+        ctx.lineTo(i,canvas.height);
+
+        ctx.stroke();
+
+    }
+
+    for(let i = 0; i < canvas.height; i += 50){
+
+        ctx.beginPath();
+
+        ctx.moveTo(0,i);
+
+        ctx.lineTo(canvas.width,i);
+
+        ctx.stroke();
+
+    }
+
+    // tank
+
+    tank1.draw();
+    tank2.draw();
+
+    // bullets
+
+    bullets.forEach(bullet => {
+
+        bullet.draw();
+
+    });
+
+}
+
+// ===== GAME LOOP =====
+
+function gameLoop(){
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(gameLoop);
+
+}
+
+gameLoop();
+
+// ===== BẮN =====
+
+document.addEventListener("keydown", function(e){
+
+    if(e.code === "Space"){
+
+        shoot(
+            tank1,
+            "#00ccff"
+        );
+
+    }
+
+    if(e.code === "Enter"){
+
+        shoot(
+            tank2,
+            "#ff3b3b"
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
