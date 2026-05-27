@@ -9,11 +9,20 @@ let currentStep = 0;
 let autoRunning = false;
 
 /* =========================
-   SLEEP
+   HASH FUNCTION
 ========================= */
 
-const sleep = (ms) =>
-    new Promise(resolve => setTimeout(resolve, ms));
+function getHash(str){
+
+    let hash = 0;
+
+    for(let i = 0; i < str.length; i++){
+
+        hash += str.charCodeAt(i);
+    }
+
+    return hash;
+}
 
 /* =========================
    CREATE BOXES
@@ -37,38 +46,22 @@ function createBoxes(container, text){
 }
 
 /* =========================
-   BAD CHARACTER TABLE
-========================= */
-
-function buildBadCharTable(pattern){
-
-    let table = {};
-
-    for(let i = 0; i < pattern.length; i++){
-
-        table[pattern[i]] = i;
-    }
-
-    return table;
-}
-
-/* =========================
    SAVE STEP
 ========================= */
 
 function saveStep(
     shift,
-    j,
     type,
-    message
+    message,
+    matchIndexes = []
 ){
 
     steps.push({
 
         shift,
-        j,
         type,
-        message
+        message,
+        matchIndexes
     });
 }
 
@@ -88,101 +81,83 @@ function prepareSteps(){
     const pattern =
         document.getElementById("pattern").value;
 
-    const badChar =
-        buildBadCharTable(pattern);
+    const patternHash =
+        getHash(pattern);
 
-    let shift = 0;
+    const m = pattern.length;
 
-    while(
-        shift <= text.length - pattern.length
+    for(
+        let i = 0;
+        i <= text.length - m;
+        i++
     ){
 
-        let j = pattern.length - 1;
+        const window =
+            text.substring(i, i + m);
 
-        /* CHECK STEP */
+        const windowHash =
+            getHash(window);
 
         saveStep(
-            shift,
-            j,
+            i,
             "check",
-            `🔍 Kiểm tra tại vị trí ${shift}`
+            `🔍 So sánh hash: ${windowHash}`
         );
 
-        /* MATCH */
+        if(windowHash === patternHash){
 
-        while(
-            j >= 0 &&
-            pattern[j] === text[shift + j]
-        ){
+            let matched = true;
 
-            saveStep(
-                shift,
-                j,
-                "match",
-                `✅ Khớp ký tự '${pattern[j]}'`
-            );
+            let matchIndexes = [];
 
-            j--;
-        }
+            for(let j = 0; j < m; j++){
 
-        /* FOUND */
+                if(
+                    text[i + j] === pattern[j]
+                ){
 
-        if(j < 0){
+                    matchIndexes.push(j);
 
-            saveStep(
-                shift,
-                j,
-                "found",
-                `🎉 TÌM THẤY MẪU tại vị trí ${shift}`
-            );
+                }else{
 
-            return;
-        }
+                    matched = false;
 
-        /* MISMATCH */
+                    break;
+                }
+            }
 
-        saveStep(
-            shift,
-            j,
-            "mismatch",
-            `❌ Sai tại ký tự '${text[shift + j]}'`
-        );
+            if(matched){
 
-        const badCharIndex =
-            badChar[text[shift + j]];
-
-        let move;
-
-        if(badCharIndex !== undefined){
-
-            move =
-                Math.max(
-                    1,
-                    j - badCharIndex
+                saveStep(
+                    i,
+                    "found",
+                    `🎉 TÌM THẤY tại vị trí ${i}`,
+                    matchIndexes
                 );
+
+                return;
+            }
+
+            saveStep(
+                i,
+                "mismatch",
+                `❌ Hash giống nhưng ký tự khác`
+            );
 
         }else{
 
-            move = j + 1;
+            saveStep(
+                i,
+                "move",
+                `➡ Hash khác → dịch sang phải`
+            );
         }
-
-        /* MOVE */
-
-        saveStep(
-            shift,
-            j,
-            "move",
-            `➡ Dịch sang phải ${move} bước`
-        );
-
-        shift += move;
     }
 
     saveStep(
         0,
-        0,
         "notfound",
-        `🚫 KHÔNG TÌM THẤY MẪU`
+        `🚫 KHÔNG TÌM THẤY`
     );
 }
 
@@ -198,65 +173,42 @@ function renderStep(){
     const pattern =
         document.getElementById("pattern").value;
 
-    const textView =
-        document.getElementById("textView");
+    const textRow =
+        document.getElementById("textRow");
 
-    const patternView =
-        document.getElementById("patternView");
+    const patternRow =
+        document.getElementById("patternRow");
 
     const status =
         document.getElementById("status");
 
-    createBoxes(textView, text);
-    createBoxes(patternView, pattern);
+    createBoxes(textRow, text);
+    createBoxes(patternRow, pattern);
 
     const textBoxes =
-        textView.children;
+        textRow.children;
 
     const patternBoxes =
-        patternView.children;
+        patternRow.children;
 
     const step =
         steps[currentStep];
 
-    /* MOVE PATTERN */
-
-    patternView.style.marginLeft =
-        `${step.shift * 90}px`;
-
-    /* EFFECTS */
+    patternRow.style.marginLeft =
+        `${step.shift * 58}px`;
 
     if(step.type === "check"){
 
-        textBoxes[
-            step.shift + step.j
-        ]?.classList.add("active");
+        for(let i = 0; i < pattern.length; i++){
 
-        patternBoxes[
-            step.j
-        ]?.classList.add("active");
-    }
+            textBoxes[
+                step.shift + i
+            ]?.classList.add("active");
 
-    if(step.type === "match"){
-
-        textBoxes[
-            step.shift + step.j
-        ]?.classList.add("match");
-
-        patternBoxes[
-            step.j
-        ]?.classList.add("match");
-    }
-
-    if(step.type === "mismatch"){
-
-        textBoxes[
-            step.shift + step.j
-        ]?.classList.add("mismatch");
-
-        patternBoxes[
-            step.j
-        ]?.classList.add("mismatch");
+            patternBoxes[
+                i
+            ]?.classList.add("active");
+        }
     }
 
     if(step.type === "found"){
@@ -266,10 +218,26 @@ function renderStep(){
             textBoxes[
                 step.shift + i
             ]?.classList.add("match");
+
+            patternBoxes[
+                i
+            ]?.classList.add("match");
         }
     }
 
-    /* STATUS */
+    if(step.type === "mismatch"){
+
+        for(let i = 0; i < pattern.length; i++){
+
+            textBoxes[
+                step.shift + i
+            ]?.classList.add("mismatch");
+
+            patternBoxes[
+                i
+            ]?.classList.add("mismatch");
+        }
+    }
 
     status.innerHTML =
 
@@ -288,7 +256,7 @@ function renderStep(){
    AUTO RUN
 ========================= */
 
-async function startSearch(){
+async function startDemo(){
 
     prepareSteps();
 
@@ -307,12 +275,15 @@ async function startSearch(){
 
         renderStep();
 
-        await sleep(1000);
+        await new Promise(
+            resolve =>
+            setTimeout(resolve, 1000)
+        );
     }
 }
 
 /* =========================
-   NEXT STEP
+   NEXT
 ========================= */
 
 function nextStep(){
@@ -340,16 +311,14 @@ function nextStep(){
 }
 
 /* =========================
-   PREV STEP
+   PREV
 ========================= */
 
 function prevStep(){
 
     autoRunning = false;
 
-    if(
-        currentStep > 0
-    ){
+    if(currentStep > 0){
 
         currentStep--;
 
@@ -370,11 +339,11 @@ function resetDemo(){
     currentStep = 0;
 
     document.getElementById(
-        "textView"
+        "textRow"
     ).innerHTML = "";
 
     document.getElementById(
-        "patternView"
+        "patternRow"
     ).innerHTML = "";
 
     document.getElementById(

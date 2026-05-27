@@ -23,186 +23,11 @@ body{
     background:
         linear-gradient(
             180deg,
-            #6dd5fa 0%,
-            #ffffff 100%
+            #ffd6e7 0%,
+            #c8f7ff 100%
         );
 
-    position:relative;
-}
-
-/* =========================
-   SUN
-========================= */
-
-body::before{
-
-    content:"☀";
-
-    position:fixed;
-
-    top:20px;
-    right:40px;
-
-    font-size:90px;
-
-    animation:
-        rotateSun 20s linear infinite,
-        glowSun 2s infinite alternate;
-
-    z-index:-1;
-}
-
-@keyframes rotateSun{
-
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes glowSun{
-
-    from{
-        filter:drop-shadow(0 0 10px yellow);
-    }
-
-    to{
-        filter:drop-shadow(0 0 30px orange);
-    }
-}
-
-/* =========================
-   CLOUDS
-========================= */
-
-.cloud{
-
-    position:absolute;
-
-    background:white;
-
-    border-radius:100px;
-
-    opacity:0.9;
-}
-
-.cloud::before,
-.cloud::after{
-
-    content:"";
-
-    position:absolute;
-
-    background:white;
-
-    border-radius:50%;
-}
-
-/* CLOUD 1 */
-
-.cloud1{
-
-    width:180px;
-    height:60px;
-
-    top:80px;
-    left:-250px;
-
-    animation:moveCloud 30s linear infinite;
-}
-
-.cloud1::before{
-
-    width:70px;
-    height:70px;
-
-    top:-30px;
-    left:20px;
-}
-
-.cloud1::after{
-
-    width:90px;
-    height:90px;
-
-    top:-45px;
-    right:20px;
-}
-
-/* CLOUD 2 */
-
-.cloud2{
-
-    width:150px;
-    height:50px;
-
-    top:220px;
-    left:-200px;
-
-    animation:moveCloud 45s linear infinite;
-}
-
-.cloud2::before{
-
-    width:60px;
-    height:60px;
-
-    top:-25px;
-    left:20px;
-}
-
-.cloud2::after{
-
-    width:80px;
-    height:80px;
-
-    top:-40px;
-    right:20px;
-}
-
-/* CLOUD 3 */
-
-.cloud3{
-
-    width:200px;
-    height:70px;
-
-    top:340px;
-    left:-300px;
-
-    animation:moveCloud 60s linear infinite;
-}
-
-.cloud3::before{
-
-    width:80px;
-    height:80px;
-
-    top:-35px;
-    left:25px;
-}
-
-.cloud3::after{
-
-    width:100px;
-    height:100px;
-
-    top:-50px;
-    right:25px;
-}
-
-@keyframes moveCloud{
-
-    from{
-        transform:translateX(0);
-    }
-
-    to{
-        transform:translateX(2200px);
-    }
+    padding:20px;
 }
 
 /* =========================
@@ -211,13 +36,11 @@ body::before{
 
 .container{
 
-    width:98%;
+    width:100%;
 
-    max-width:100%;
+    max-width:1400px;
 
-    margin:20px auto;
-
-    padding:10px;
+    margin:auto;
 }
 
 /* =========================
@@ -230,18 +53,18 @@ h1{
 
     font-size:42px;
 
-    margin-bottom:25px;
+    margin-bottom:30px;
 
-    color:#ff4d6d;
+    color:#ff4d8d;
 
     text-shadow:
-        3px 3px 0px white,
-        6px 6px 0px #ffbe0b;
+        3px 3px 0 white,
+        6px 6px 0 #ffd166;
 
-    animation:bounceTitle 2s infinite;
+    animation:bounce 2s infinite;
 }
 
-@keyframes bounceTitle{
+@keyframes bounce{
 
     0%{
         transform:translateY(0);
@@ -264,34 +87,16 @@ h1{
 .visual-area,
 .status-box{
 
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #f3f4f6
-        );
-
-    border:5px solid #222;
+    background:white;
 
     border-radius:30px;
-
-    box-shadow:
-        8px 8px 0px #222;
-}
-
-/* =========================
-   PANEL
-========================= */
-
-.panel{
 
     padding:25px;
 
     margin-bottom:25px;
 
-    display:grid;
-
-    gap:20px;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* =========================
@@ -300,29 +105,33 @@ h1{
 
 .input-box{
 
-    display:grid;
-
-    gap:10px;
+    margin-bottom:20px;
 }
 
 .input-box label{
+
+    display:block;
+
+    margin-bottom:10px;
 
     font-size:20px;
 
     font-weight:bold;
 
-    color:#222;
+    color:#ff4d8d;
 }
 
 .input-box input{
 
-    padding:16px;
+    width:100%;
 
-    border-radius:16px;
+    padding:15px;
 
-    border:4px solid #222;
+    border:none;
 
-    background:#fff9c4;
+    border-radius:18px;
+
+    background:#fff0f6;
 
     font-size:18px;
 
@@ -333,12 +142,8 @@ h1{
 
 .input-box input:focus{
 
-    background:white;
-
-    transform:scale(1.01);
-
     box-shadow:
-        0 0 15px #38bdf8;
+        0 0 15px #ff8fab;
 }
 
 /* =========================
@@ -362,35 +167,30 @@ button{
 
     flex:1;
 
-    min-width:180px;
+    min-width:160px;
 
-    padding:14px 18px;
+    padding:14px;
 
     border:none;
 
-    border-radius:18px;
-
-    border:4px solid #222;
+    border-radius:20px;
 
     background:
         linear-gradient(
-            45deg,
-            #ff4d6d,
-            #ff758f
+            135deg,
+            #ff8fab,
+            #ff5d8f
         );
 
     color:white;
 
-    font-size:18px;
+    font-size:16px;
 
     font-weight:bold;
 
     cursor:pointer;
 
     transition:0.3s;
-
-    box-shadow:
-        5px 5px 0px #222;
 }
 
 button:hover{
@@ -406,13 +206,7 @@ button:hover{
 
 .visual-area{
 
-    padding:20px;
-
-    margin-bottom:25px;
-
     overflow-x:auto;
-
-    scrollbar-width:none;
 }
 
 /* =========================
@@ -425,7 +219,7 @@ button:hover{
 
     font-weight:bold;
 
-    color:#ff4d6d;
+    color:#ff4d8d;
 
     margin-bottom:12px;
 }
@@ -442,11 +236,11 @@ button:hover{
 
     min-height:80px;
 
-    margin-bottom:25px;
+    margin-bottom:20px;
 
     position:relative;
 
-    flex-wrap:nowrap;
+    width:max-content;
 }
 
 /* =========================
@@ -455,8 +249,8 @@ button:hover{
 
 .char-box{
 
-    width:52px;
-    height:52px;
+    width:50px;
+    height:50px;
 
     margin-right:6px;
 
@@ -466,35 +260,25 @@ button:hover{
     justify-content:center;
     align-items:center;
 
-    font-size:24px;
-    font-weight:bold;
-
-    color:#222;
-
     background:
         linear-gradient(
             145deg,
-            #ffe066,
-            #ffd43b
+            #fff,
+            #ffe5ec
         );
 
-    border:4px solid #222;
+    color:#ff4d8d;
 
-    transition:0.3s;
+    font-size:22px;
+
+    font-weight:bold;
 
     box-shadow:
-        4px 4px 0px #222;
+        0 4px 8px rgba(0,0,0,0.1);
 
     flex-shrink:0;
-}
 
-/* HOVER */
-
-.char-box:hover{
-
-    transform:
-        rotate(5deg)
-        scale(1.05);
+    transition:0.3s;
 }
 
 /* =========================
@@ -506,23 +290,23 @@ button:hover{
     background:
         linear-gradient(
             145deg,
-            #4cc9f0,
-            #4361ee
+            #74c0fc,
+            #4dabf7
         ) !important;
 
     color:white;
 
-    animation:pulse 0.6s infinite alternate;
+    animation:pulse 0.5s infinite alternate;
 }
 
 @keyframes pulse{
 
     from{
-        transform:scale(1.05);
+        transform:scale(1);
     }
 
     to{
-        transform:scale(1.15);
+        transform:scale(1.12);
     }
 }
 
@@ -535,8 +319,8 @@ button:hover{
     background:
         linear-gradient(
             145deg,
-            #70e000,
-            #38b000
+            #69db7c,
+            #38d9a9
         ) !important;
 
     color:white;
@@ -551,7 +335,7 @@ button:hover{
     }
 
     to{
-        transform:translateY(-6px);
+        transform:translateY(-5px);
     }
 }
 
@@ -564,32 +348,32 @@ button:hover{
     background:
         linear-gradient(
             145deg,
-            #ff595e,
-            #d90429
+            #ff6b6b,
+            #fa5252
         ) !important;
 
     color:white;
 
-    animation:shake 0.25s infinite;
+    animation:shake 0.2s infinite;
 }
 
 @keyframes shake{
 
     0%{
-        transform:translateX(-3px);
+        transform:translateX(-2px);
     }
 
     50%{
-        transform:translateX(3px);
+        transform:translateX(2px);
     }
 
     100%{
-        transform:translateX(-3px);
+        transform:translateX(-2px);
     }
 }
 
 /* =========================
-   PATTERN
+   PATTERN ROW
 ========================= */
 
 .pattern-row{
@@ -601,16 +385,9 @@ button:hover{
    STATUS
 ========================= */
 
-.status-box{
-
-    padding:25px;
-}
-
 .status-box h2{
 
-    font-size:28px;
-
-    color:#ff4d6d;
+    color:#ff4d8d;
 
     margin-bottom:15px;
 }
@@ -619,16 +396,16 @@ button:hover{
 
     font-size:20px;
 
-    line-height:1.6;
+    line-height:1.7;
 
-    color:#222;
+    color:#444;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media(max-width:900px){
+@media(max-width:768px){
 
     h1{
 
@@ -637,8 +414,8 @@ button:hover{
 
     .char-box{
 
-        width:42px;
-        height:42px;
+        width:40px;
+        height:40px;
 
         font-size:18px;
     }

@@ -2,90 +2,127 @@
 <html lang="vi">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boyer Moore Cartoon</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Rabin Karp Demo</title>
 
     <link rel="stylesheet" href="demo.css">
+
 </head>
 
 <body>
 
     <!-- CLOUDS -->
+
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
     <div class="cloud cloud3"></div>
 
-    <!-- MAIN -->
     <div class="container">
 
         <h1>
-            🎮 BOYER - MOORE CARTOON 🎮
+            🔥 DEMO THUẬT TOÁN RABIN-KARP 🔥
         </h1>
 
         <!-- PANEL -->
+
         <div class="panel">
 
             <div class="input-box">
-                <label>📜 Chuỗi văn bản</label>
-                <input type="text" id="text" value="ABAAABCDABCABC">
+
+                <label>
+                    Chuỗi văn bản
+                </label>
+
+                <input
+                    type="text"
+                    id="text"
+                    value="ABCCDDAEFG">
+
             </div>
 
             <div class="input-box">
-                <label>🎯 Mẫu cần tìm</label>
-                <input type="text" id="pattern" value="ABCABC">
+
+                <label>
+                    Mẫu cần tìm
+                </label>
+
+                <input
+                    type="text"
+                    id="pattern"
+                    value="CDD">
+
             </div>
 
-            <button onclick="startSearch()">
-                ▶ BẮT ĐẦU DEMO
-            </button>
+            <div class="button-group">
+
+                <button onclick="startDemo()">
+                    ▶ AUTO RUN
+                </button>
+
+                <button onclick="nextStep()">
+                    ⏭ NEXT
+                </button>
+
+                <button onclick="prevStep()">
+                    ⏮ PREV
+                </button>
+
+                <button onclick="resetDemo()">
+                    🔄 RESET
+                </button>
+
+            </div>
 
         </div>
 
         <!-- VISUAL -->
+
         <div class="visual-area">
 
-            <div class="tag">TEXT</div>
-            <div id="textView" class="row"></div>
+            <div class="tag">
+                TEXT
+            </div>
 
-            <div class="tag">PATTERN</div>
-            <div id="patternView" class="row pattern-row"></div>
+            <div
+                class="row"
+                id="textRow">
+            </div>
+
+            <div class="tag">
+                PATTERN
+            </div>
+
+            <div
+                class="row pattern-row"
+                id="patternRow">
+            </div>
 
         </div>
 
         <!-- STATUS -->
+
         <div class="status-box">
 
-            <h2>🤖 THÔNG BÁO</h2>
+            <h2>
+                📖 GIẢI THÍCH
+            </h2>
 
-            <p id="status">
-                Nhấn nút để bắt đầu mô phỏng Boyer Moore...
-            </p>
+            <div id="status">
+
+                🤖 Sẵn sàng demo...
+
+            </div>
 
         </div>
 
     </div>
 
     <script src="demo.js"></script>
-    <div class="button-group">
-
-    <button onclick="startSearch()">
-        ▶ AUTO RUN
-    </button>
-
-    <button onclick="nextStep()">
-        ⏭ NEXT STEP
-    </button>
-
-    <button onclick="prevStep()">
-        ⏮ PREV STEP
-    </button>
-
-    <button onclick="resetDemo()">
-        🔄 RESET
-    </button>
-
-</div>
 
 </body>
 
