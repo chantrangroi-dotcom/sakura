@@ -1,0 +1,321 @@
+/* ==========================================================================
+   1. THIẾT LẬP NỀN TẢNG
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Baloo 2', cursive, Arial, sans-serif;
+    background-color: #f7f1eb; /* Nền kem sữa ấm cúng */
+    color: #4b2e1f; /* Màu nâu đậm sang trọng */
+}
+
+/* ==========================================================================
+   2. THANH HEADER ĐIỀU HƯỚNG
+   ========================================================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 6%;
+    background-color: #6b3e26; /* Nâu cà phê mộc mạc */
+    box-shadow: 0 4px 12px rgba(107, 62, 38, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo {
+    font-size: 25px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+header .logo i {
+    color: #d88a3d;
+}
+
+header nav {
+    display: flex;
+    gap: 8px;
+}
+
+header nav a {
+    color: #f6efe7;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s ease;
+}
+
+header nav a:hover, 
+header nav a.active {
+    background-color: #d88a3d;
+    color: white;
+}
+
+/* ==========================================================================
+   3. BANNER HERO
+   ========================================================================== */
+.hero {
+    background-color: #fff3e6;
+    text-align: center;
+    padding: 40px 20px;
+    border-bottom: 1px solid #f1eae0;
+}
+
+.hero h2 {
+    font-size: 36px;
+    line-height: 1.3;
+    color: #4b2e1f;
+}
+
+.hero h2 span {
+    color: #d88a3d;
+}
+
+/* ==========================================================================
+   4. BỐ CỤC CHÍNH (MAIN LAYOUT HAI CỘT)
+   ========================================================================== */
+.main-layout {
+    display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* KHỐI LƯỚI SẢN PHẨM BÊN TRÁI */
+.product-grid {
+    flex: 2.7;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* THẺ CARD SẢN PHẨM CHUẨN ĐẸP */
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(107, 62, 38, 0.04);
+    border: 1px solid #f1eae0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 390px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(107, 62, 38, 0.1);
+}
+
+.card img {
+    width: 100%;
+    max-width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    /* Loại bỏ phần viền trắng thô của ảnh gốc bằng hiệu ứng hòa trộn */
+    mix-blend-mode: multiply; 
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #4b2e1f;
+    margin: 6px 0;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card .price {
+    font-weight: 700;
+    color: #d88a3d;
+    font-size: 17px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.card button {
+    background-color: #d88a3d;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+    transition: background 0.2s ease;
+}
+
+.card button:hover {
+    background-color: #b86f2f;
+}
+
+/* ==========================================================================
+   5. KHỐI GIỎ HÀNG BÊN PHẢI (FIX LỖI TRÀN VÀ ĐÈ NÚT)
+   ========================================================================== */
+.cart {
+    flex: 1.3;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1eae0;
+    position: sticky; /* Ghim chặt giỏ hàng đi dọc theo màn hình khi cuộn */
+    top: 90px;
+}
+
+.cart h3 {
+    font-size: 19px;
+    color: #4b2e1f;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f7f1eb;
+}
+
+#cart-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto; /* Tự động tạo thanh cuộn nếu giỏ hàng quá nhiều món nước */
+    padding-right: 5px;
+}
+
+.empty-cart-msg {
+    text-align: center;
+    color: #aaa;
+    padding: 25px 0;
+    font-size: 15px;
+}
+
+/* Thiết kế từng dòng item món ăn trong giỏ hàng */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #faf5f0;
+}
+
+.cart-item-info strong {
+    font-size: 15px;
+    color: #4b2e1f;
+}
+
+.cart-item-info span {
+    color: #d88a3d;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+.cart-item-price {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cart-item-price span {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ff5252;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* Khu vực tổng số tiền */
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 16px;
+    background-color: #fff6ed;
+    border-radius: 12px;
+    color: #4b2e1f;
+}
+
+.cart-total #total-amount {
+    color: #d88a3d;
+    font-size: 18px;
+}
+
+/* Nút thanh toán duy nhất to, đẹp */
+.btn-checkout {
+    display: block;
+    width: 100%;
+    background-color: #6b3e26;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-checkout:hover {
+    background-color: #4b2e1f;
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   6. FOOTER
+   ========================================================================== */
+footer {
+    background-color: #331b10;
+    color: #f6efe7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 6%;
+    font-size: 14px;
+    margin-top: 50px;
+}
+
+footer i {
+    font-size: 18px;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+footer i:hover {
+    color: #d88a3d;
+}
+
+/* Phản hồi trên điện thoại di động */
+@media (max-width: 768px) {
+    .main-layout { flex-direction: column; padding: 15px; }
+    .cart { position: static; width: 100%; }
+    header { flex-direction: column; gap: 12px; text-align: center; }
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Dream - Thực Đơn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-mug-hot"></i> Coffee Dream
+        </div>
+        <nav>
+            <a href="index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+            <a href="menu.html" class="active"><i class="fa-solid fa-mug-hot"></i> Menu</a>
+            <a href="datban.html"><i class="fa-solid fa-calendar"></i> Đặt bàn</a>
+            <a href="menu.html"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng</a>
+            <a href="#"><i class="fa-solid fa-phone"></i> Liên hệ</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h2>Khởi đầu ngày mới với <br><span>Coffee Dream</span></h2>
+    </div>
+
+    <div class="main-layout">
+
+        <div class="product-grid">
+            <div class="card">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.0VeK1wmt2NL8KnndgqBqWwHaEJ?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Espresso Premium">
+                <h3>Espresso Premium</h3>
+                <span class="price">45.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://th.bing.com/th/id/OIP.7TtfWh-Jh8UzhItFfFOVSwHaEO?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Latte Macchiato">
+                <h3>Latte Macchiato</h3>
+                <span class="price">55.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://th.bing.com/th/id/OIP.Pe-S01F7qQmyT8Md6QyK_wHaE8?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Cappuccino">
+                <h3>Cappuccino</h3>
+                <span class="price">55.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/180774/Originals/americano-da-7.jpg" alt="Americano Đá">
+                <h3>Americano Đá</h3>
+                <span class="price">40.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=500" alt="Bạc Xỉu Sài Gòn">
+                <h3>Bạc Xỉu Sài Gòn</h3>
+                <span class="price">35.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?w=500" alt="Cà Phê Muối">
+                <h3>Cà Phê Muối</h3>
+                <span class="price">40.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500" alt="Trà Đào Cam Sả">
+                <h3>Trà Đào Cam Sả</h3>
+                <span class="price">45.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://www.sweethomecook.com/wp-content/uploads/2025/07/Iced-Matcha-Latte.jpg" alt="Matcha Latte">
+                <h3>Matcha Latte</h3>
+                <span class="price">60.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500" alt="Chocolate Đá Xay">
+                <h3>Chocolate Đá Xay</h3>
+                <span class="price">65.000đ</span>
+                <button><i class="fa-solid fa-plus"></i> Mua ngay</button>
+            </div>
+        </div>
+
+        <div class="cart">
+            <h3>🛒 Giỏ hàng của bạn</h3>
+            <ul id="cart-list">
+                <li class="empty-cart-msg">Giỏ hàng đang trống</li>
+            </ul>
+            <div class="cart-total">
+                <span>Tổng thanh toán:</span>
+                <span id="total-amount">0đ</span>
+            </div>
+            <button class="btn-checkout"><i class="fa-solid fa-credit-card"></i> Tiến Hành Thanh Toán</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <div>© 2026 Coffee Dream</div>
+        <div>
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-tiktok"></i>
+            <i class="fa-brands fa-youtube"></i>
+        </div>
+    </footer>
+
+    <script src="menu.js"></script>
+</body>
+</html>

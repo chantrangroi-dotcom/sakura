@@ -2,128 +2,124 @@
 <html lang="vi">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Rabin Karp Demo</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Dream</title>
     <link rel="stylesheet" href="style.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- CLOUDS -->
-
-    <div class="cloud cloud1"></div>
-    <div class="cloud cloud2"></div>
-    <div class="cloud cloud3"></div>
-
-    <div class="container">
-
-        <h1>
-            🔥 DEMO THUẬT TOÁN RABIN-KARP 🔥
-        </h1>
-
-        <!-- PANEL -->
-
-        <div class="panel">
-
-            <div class="input-box">
-
-                <label>
-                    Chuỗi văn bản
-                </label>
-
-                <input
-                    type="text"
-                    id="text"
-                    value="ABCCDDAEFG">
-
-            </div>
-
-            <div class="input-box">
-
-                <label>
-                    Mẫu cần tìm
-                </label>
-
-                <input
-                    type="text"
-                    id="pattern"
-                    value="CDD">
-
-            </div>
-
-            <div class="button-group">
-
-                <button onclick="startDemo()">
-                    ▶ AUTO RUN
-                </button>
-
-                <button onclick="nextStep()">
-                    ⏭ NEXT
-                </button>
-
-                <button onclick="prevStep()">
-                    ⏮ PREV
-                </button>
-
-                <button onclick="resetDemo()">
-                    🔄 RESET
-                </button>
-
-            </div>
-
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-mug-hot"></i>
+            Coffee Dream
         </div>
+        <nav>
+            <a href="#" class="active">
+                <i class="fa-solid fa-house"></i>
+                Trang chủ
+            </a>
+            <a href="menu.html">
+                <i class="fa-solid fa-mug-hot"></i>
+                Menu
+            </a>
+            <a href="menu.html">
+                <i class="fa-solid fa-calendar"></i>
+                Đặt bàn
+            </a>
+            <a href="datban.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Giỏ hàng
+            </a>
+            <a href="#">
+                <i class="fa-solid fa-phone"></i>
+                Liên hệ
+            </a>
+        </nav>
+    </header>
 
-        <!-- VISUAL -->
-
-        <div class="visual-area">
-
-            <div class="tag">
-                TEXT
+    <section class="hero">
+        <div class="left">
+            <div class="small-cloud"></div>
+            <h1>
+                Coffee <br>
+                <span>Makes Happiness</span>
+            </h1>
+            <p>Thưởng thức những ly cà phê thơm ngon mỗi ngày.</p>
+            <div class="buttons">
+                <button class="btn1" onclick="window.location.href='menu.html'">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    Đặt ngay
+                </button>
+                <button class="btn2" onclick="window.location.href='menu.html'">
+                    <i class="fa-solid fa-book"></i>
+                    Xem Menu
+                </button>
             </div>
-
-            <div
-                class="row"
-                id="textRow">
-            </div>
-
-            <div class="tag">
-                PATTERN
-            </div>
-
-            <div
-                class="row pattern-row"
-                id="patternRow">
-            </div>
-
         </div>
+        <div class="right">
+            <img src="anhlogo.png" alt="Logo">
+        </div>
+    </section>
 
-        <!-- STATUS -->
-
-        <div class="status-box">
-
-            <h2>
-                📖 GIẢI THÍCH
-            </h2>
-
-            <div id="status">
-
-                🤖 Sẵn sàng demo...
-
+    <section class="product">
+        <h2>⭐ Sản phẩm nổi bật ⭐</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="Espresso.png" alt="Espresso">
+                <h3>Espresso</h3>
+                <p class="price">35.000đ</p>
+                <button onclick="window.location.href='menu.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Mua ngay
+                </button>
             </div>
 
+            <div class="card">
+                <img src="Latte.png" alt="Latte">
+                <h3>Latte</h3>
+                <p class="price">50.000đ</p>
+                <button onclick="window.location.href='menu.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Mua ngay
+                </button>
+            </div>
+
+            <div class="card">
+                <img src="Cappuccino.png" alt="Cappuccino">
+                <h3>Cappuccino</h3>
+                <p class="price">45.000đ</p>
+                <button onclick="window.location.href='menu.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Mua ngay
+                </button>
+            </div>
+
+            <div class="card">
+                <img src="mocha.png" alt="Mocha">
+                <h3>Mocha</h3>
+                <p class="price">55.000đ</p>
+                <button onclick="window.location.href='menu.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Mua ngay
+                </button>
+            </div>
         </div>
+    </section>
 
-    </div>
+    <footer>
+        <div>© 2026 Coffee Dream</div>
+        <div>
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-tiktok"></i>
+            <i class="fa-brands fa-youtube"></i>
+        </div>
+    </footer>
 
-    <script src="script.js"></script>
-
-</body>
+    </body>
 
 </html>
