@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Dream Admin</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#6F4E37,#B08968);
+    padding:30px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+.header{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#6F4E37;
+}
+
+.stats{
+    background:#f7f7f7;
+    padding:15px 25px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.stats span{
+    display:block;
+    font-size:28px;
+    font-weight:bold;
+    color:#6F4E37;
+}
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    font-size:16px;
+    outline:none;
+}
+
+.table-box{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.table-title{
+    background:#6F4E37;
+    color:white;
+    padding:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#8B5E3C;
+    color:white;
+}
+
+th{
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+}
+
+tbody tr:hover{
+    background:#fff7f2;
+}
+
+.delete-btn{
+    background:#e53935;
+    border:none;
+    color:white;
+    padding:8px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.delete-btn:hover{
+    opacity:.8;
+}
+
+.empty{
+    padding:30px;
+    color:#888;
+    font-size:18px;
+}
+
+@media(max-width:900px){
+
+    body{
+        padding:10px;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="logo">
+            <i class="fa-solid fa-mug-hot"></i>
+            Coffee Dream Admin
+        </div>
+
+        <div class="stats">
+            Tổng đơn
+            <span id="totalBooking">0</span>
+        </div>
+
+    </div>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Tìm theo tên hoặc số điện thoại..."
+        >
+    </div>
+
+    <div class="table-box">
+
+        <div class="table-title">
+            📅 Danh Sách Đặt Bàn
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>👤 Họ tên</th>
+                    <th>📞 SĐT</th>
+                    <th>📅 Ngày</th>
+                    <th>🕒 Giờ</th>
+                    <th>👥 Số khách</th>
+                    <th>📝 Ghi chú</th>
+                    <th>⚙️</th>
+                </tr>
+            </thead>
+
+            <tbody id="bookingBody">
+
+                <tr>
+                    <td colspan="7" class="empty">
+                        Đang tải dữ liệu...
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    remove
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBJy6RRfcPHjsVWjIUa7EH5JhhmZKwD2Wk",
+    authDomain: "quancaffe-d800b.firebaseapp.com",
+    databaseURL: "https://quancaffe-d800b-default-rtdb.firebaseio.com",
+    projectId: "quancaffe-d800b",
+    storageBucket: "quancaffe-d800b.firebasestorage.app",
+    messagingSenderId: "387316681830",
+    appId: "1:387316681830:web:94dc3be83a58b4d6f5b1a7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const tbody = document.getElementById("bookingBody");
+const totalBooking = document.getElementById("totalBooking");
+
+onValue(ref(db,"dat_ban"), (snapshot)=>{
+
+    tbody.innerHTML = "";
+
+    const data = snapshot.val();
+
+    if(!data){
+
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="7" class="empty">
+                Chưa có đơn đặt bàn nào
+            </td>
+        </tr>
+        `;
+
+        totalBooking.textContent = "0";
+        return;
+    }
+
+    const bookings = Object.entries(data);
+
+    totalBooking.textContent = bookings.length;
+
+    bookings.reverse().forEach(([key,item])=>{
+
+        tbody.innerHTML += `
+        <tr>
+            <td>${item.name || ""}</td>
+            <td>${item.phone || ""}</td>
+            <td>${item.date || ""}</td>
+            <td>${item.time || ""}</td>
+            <td>${item.guests || ""}</td>
+            <td>${item.notes || ""}</td>
+            <td>
+                <button
+                    class="delete-btn"
+                    data-id="${key}">
+                    Xóa
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+
+    document.querySelectorAll(".delete-btn").forEach(btn=>{
+
+        btn.onclick = async ()=>{
+
+            if(confirm("Bạn có chắc muốn xóa đơn này?")){
+
+                await remove(
+                    ref(db,"dat_ban/"+btn.dataset.id)
+                );
+
+            }
+
+        };
+
+    });
+
+});
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",(e)=>{
+
+    const keyword =
+    e.target.value.toLowerCase();
+
+    document
+    .querySelectorAll("#bookingBody tr")
+    .forEach(row=>{
+
+        row.style.display =
+        row.innerText
+        .toLowerCase()
+        .includes(keyword)
+        ? ""
+        : "none";
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>

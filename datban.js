@@ -1,115 +1,216 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import {
+    getDatabase,
+    ref,
+    push
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBJy6RRfcPHjsVWjIUa7EH5JhhmZKwD2Wk",
+    authDomain: "quancaffe-d800b.firebaseapp.com",
+    databaseURL: "https://quancaffe-d800b-default-rtdb.firebaseio.com",
+    projectId: "quancaffe-d800b",
+    storageBucket: "quancaffe-d800b.firebasestorage.app",
+    messagingSenderId: "387316681830",
+    appId: "1:387316681830:web:94dc3be83a58b4d6f5b1a7"
+};
+
+/* =========================
+   KHỞI TẠO FIREBASE
+========================= */
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+console.log("🔥 Firebase khởi tạo thành công");
+
+/* =========================
+   TEST KẾT NỐI FIREBASE
+========================= */
+
+push(ref(db, "test"), {
+    status: "online",
+    time: new Date().toISOString()
+})
+.then(() => {
+    console.log("✅ Firebase kết nối thành công");
+})
+.catch((err) => {
+    console.error("❌ Firebase lỗi:", err);
+    alert("Firebase lỗi:\n" + err.message);
+});
+
+/* =========================
+   FORM ĐẶT BÀN
+========================= */
+
 document.addEventListener("DOMContentLoaded", () => {
+
     const formSteps = document.querySelectorAll(".form-step");
     const stepDots = document.querySelectorAll(".progress-bar .step");
     const nextButtons = document.querySelectorAll(".btn-next");
     const prevButtons = document.querySelectorAll(".btn-prev");
     const bookingForm = document.getElementById("booking-form");
-    const dateInput = document.getElementById("booking-date");
 
-    let currentStep = 0; // Bước đầu tiên (Index bằng 0)
+    let currentStep = 0;
 
-    // Khóa ngày trong quá khứ
-    if (dateInput) {
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        let mm = String(today.getMonth() + 1).padStart(2, '0');
-        let dd = String(today.getDate()).padStart(2, '0');
-        dateInput.min = `${yyyy}-${mm}-${dd}`;
-        dateInput.value = `${yyyy}-${mm}-${dd}`;
-    }
-
-    // Hàm cập nhật giao diện ẩn/hiện form và thanh tiến trình
     function updateFormSteps() {
-        // Cập nhật ẩn/hiện các khối bước
+
         formSteps.forEach((step, index) => {
             step.classList.toggle("active", index === currentStep);
         });
 
-        // Cập nhật màu sắc trên thanh tiến trình 1-2-3
         stepDots.forEach((dot, index) => {
             dot.classList.toggle("active", index <= currentStep);
         });
     }
 
-    // Hàm kiểm tra tính hợp lệ dữ liệu ở bước 1
-    function validateStep() {
-        if (currentStep === 0) {
-            const name = document.getElementById("booking-name");
-            const phone = document.getElementById("booking-phone");
-            let isValid = true;
+    updateFormSteps();
 
-            if (name.value.trim() === "") {
-                name.nextElementSibling.style.display = "block";
-                name.style.borderColor = "#ff5252";
-                isValid = false;
-            } else {
-                name.nextElementSibling.style.display = "none";
-                name.style.borderColor = "#ddd";
-            }
+    /* =========================
+       NÚT TIẾP THEO
+    ========================= */
 
-            if (phone.value.trim().length < 9) {
-                phone.nextElementSibling.style.display = "block";
-                phone.style.borderColor = "#ff5252";
-                isValid = false;
-            } else {
-                phone.nextElementSibling.style.display = "none";
-                phone.style.borderColor = "#ddd";
-            }
-
-            return isValid;
-        }
-        return true; // Các bước khác mặc định cho qua
-    }
-
-    // Xử lý khi nhấn nút "Tiếp theo"
     nextButtons.forEach(btn => {
+
         btn.addEventListener("click", () => {
-            if (validateStep()) {
-                currentStep++;
-                if (currentStep >= formSteps.length) currentStep = formSteps.length - 1;
+
+            if (currentStep === 0) {
+
+                const name =
+                    document.getElementById("booking-name").value.trim();
+
+                const phone =
+                    document.getElementById("booking-phone").value.trim();
+
+                if (!name) {
+                    alert("Vui lòng nhập họ tên!");
+                    return;
+                }
+
+                if (phone.length < 9) {
+                    alert("Vui lòng nhập số điện thoại hợp lệ!");
+                    return;
+                }
+            }
+
+            if (currentStep === 1) {
+
+                const date =
+                    document.getElementById("booking-date").value;
+
+                if (!date) {
+                    alert("Vui lòng chọn ngày!");
+                    return;
+                }
+            }
+
+            currentStep++;
+            updateFormSteps();
+
+        });
+
+    });
+
+    /* =========================
+       NÚT QUAY LẠI
+    ========================= */
+
+    prevButtons.forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            if (currentStep > 0) {
+                currentStep--;
                 updateFormSteps();
             }
+
         });
+
     });
 
-    // Xử lý khi nhấn nút "Quay lại"
-    prevButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            currentStep--;
-            if (currentStep < 0) currentStep = 0;
-            updateFormSteps();
-        });
-    });
+    /* =========================
+       GỬI ĐẶT BÀN
+    ========================= */
 
-    // Xử lý khi bấm nút "Xác nhận đặt bàn" cuối cùng
-    if (bookingForm) {
-        bookingForm.addEventListener("submit", (e) => {
-            e.preventDefault();
+    bookingForm.addEventListener("submit", async (e) => {
 
-            const submitBtn = document.querySelector(".btn-submit");
-            const name = document.getElementById("booking-name").value;
-            const phone = document.getElementById("booking-phone").value;
-            const date = dateInput.value;
-            const time = document.getElementById("booking-time").value;
-            const guests = document.getElementById("booking-guests").options[document.getElementById("booking-guests").selectedIndex].text;
+        e.preventDefault();
 
-            // Hiệu ứng loading giả lập gửi dữ liệu lên server
+        const submitBtn =
+            document.querySelector(".btn-submit");
+
+        const bookingData = {
+
+            name:
+                document.getElementById("booking-name").value.trim(),
+
+            phone:
+                document.getElementById("booking-phone").value.trim(),
+
+            date:
+                document.getElementById("booking-date").value,
+
+            time:
+                document.getElementById("booking-time").value,
+
+            guests:
+                document.getElementById("booking-guests").value,
+
+            notes:
+                document.getElementById("booking-notes").value.trim(),
+
+            createdAt:
+                new Date().toLocaleString("vi-VN")
+        };
+
+        try {
+
             submitBtn.disabled = true;
-            submitBtn.style.background = "#8e6c58";
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang hoàn tất lịch hẹn...`;
 
-            setTimeout(() => {
-                alert(`🎉 ĐẶT BÀN HOÀN TẤT THÀNH CÔNG!\n\nHệ thống đã lưu trữ lịch của bạn:\n👤 Khách hàng: ${name}\n📞 SĐT: ${phone}\n⏰ Thời gian: ${time} ngày ${date}\n👥 Số lượng: ${guests}`);
-                
-                // Reset form về trạng thái ban đầu
-                bookingForm.reset();
-                currentStep = 0;
-                updateFormSteps();
+            submitBtn.innerHTML =
+                `<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...`;
 
-                submitBtn.disabled = false;
-                submitBtn.style.background = "#6b3e26";
-                submitBtn.innerHTML = `Xác Nhận Đặt Bàn <i class="fa-solid fa-circle-check"></i>`;
-            }, 1500);
-        });
-    }
+            console.log("📤 Đang gửi:", bookingData);
+
+            await push(
+                ref(db, "dat_ban"),
+                bookingData
+            );
+
+            console.log("✅ Đặt bàn thành công");
+
+            alert("🎉 Đặt bàn thành công!");
+
+            bookingForm.reset();
+
+            currentStep = 0;
+
+            updateFormSteps();
+
+        } catch (error) {
+
+            console.error("❌ Firebase Error:", error);
+
+            alert(
+                "Lỗi Firebase:\n\n" +
+                error.code +
+                "\n\n" +
+                error.message
+            );
+
+        } finally {
+
+            submitBtn.disabled = false;
+
+            submitBtn.innerHTML =
+                `Xác Nhận Đặt Bàn <i class="fa-solid fa-circle-check"></i>`;
+        }
+
+    });
+
 });
